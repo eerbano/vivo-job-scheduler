@@ -1,0 +1,32 @@
+{
+  "name": "vivo-job-scheduler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scr/app.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "^4.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1"
+  },
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eerbano/vivo-job-scheduler.git"
+  },
+  "keywords": [
+    "scheduler"
+  ],
+  "author": "Enzo Erbano",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/eerbano/vivo-job-scheduler/issues"
+  },
+  "homepage": "https://github.com/eerbano/vivo-job-scheduler#readme"
+}
