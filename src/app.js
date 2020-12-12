@@ -1,38 +1,13 @@
+const data = require('../src/data')
+
 const app = {};
 
-const jobs =
-    [
-        {
-            id: 1,
-            descricao: "Importação de arquivos de fundos",
-            data_maxima_conclusao: "2019-11-10 12:00:00",
-            tempo_estimado: "2 horas",
-        },
-        {
-            id: 2,
-            descricao: "Importação de dados da Base Legada",
-            data_maxima_conclusao: "2019-11-11 12:00:00",
-            tempo_estimado: "4 horas",
-        },
-        {
-            id: 3,
-            descricao: "Importação de dados de integração",
-            data_maxima_conclusao: "2019-11-11 08:00:00",
-            tempo_estimado: "6 horas",
-        },
-    ]
-
-const window_start = "2019-11-10 09:00:00"
-const window_end = "2019-11-11 12:00:00"
-
-app.buildQueue = (firstJob, jobs) =>
+app.buildQueue = (jobs) =>
 {
     let array = []
     let timelimit = 8
     let index = 0
-    array.push(firstJob.id)
-    timelimit = timelimit - (firstJob.tempo_estimado.match(/\d+/)[0])
-    while ((timelimit > 0) && (jobs.length > 0))
+    while ((timelimit > 0) && (index < jobs.length))
     {
         let job_time = jobs[index].tempo_estimado.match(/\d+/)[0]
         if ((timelimit - job_time) >= 0)
@@ -41,7 +16,10 @@ app.buildQueue = (firstJob, jobs) =>
             array.push(jobs[index].id)
             jobs.splice(index, 1);
         }
-        index++
+        else
+        {
+            index++
+        }
     }
     return array
 }
@@ -77,27 +55,51 @@ app.checkJobsToWindowLimits = (jobs) =>
 app.scheduler = (jobs, window_start, window_end) =>
 {
     let queues = []
-    app.buildWindowFrame(jobs, window_start, window_end)
 
-    if (app.checkJobsToWindowLimits(jobs))
+    if (app.validateDate([window_start, window_end]))
     {
-        jobs.shift()
-        jobs.pop()
-        while (jobs.length > 0)
+        app.buildWindowFrame(jobs, window_start, window_end)
+
+        if (app.checkJobsToWindowLimits(jobs))
         {
-            let queue = app.buildQueue(jobs.shift(), jobs)
-            queues.push(queue)
+            jobs.shift()
+            jobs.pop()
+            while (jobs.length > 0)
+            {
+                let queue = app.buildQueue(jobs)
+                queues.push(queue)
+            }
+        }
+        else
+        {
+            console.log("There is jobs outside window limits")
         }
     }
-    else 
+    else
     {
-        console.log("Jobs outside window limits")
+        console.log("There is an invalid time in window frame")
     }
     return queues
 }
 
+app.validateDate = (array) =>
+{
+    let validDate = true
+    array.forEach((date) => 
+    {
+        timestamp = new Date(date)
+        if (!isNaN(timestamp.getTime()) && date.length === 19)
+        {
+            validDate = validDate ? true : false
+        }
+        else
+        {
+            validDate = false
+        }
+    });
+    return validDate
+}
 
-
-app.scheduler(jobs, window_start, window_end)
+//app.scheduler(data.jobs, data.window_start, data.window_end)
 
 module.exports = app;
