@@ -3,8 +3,8 @@ const scheduler = require('../src/scheduler')
 
 let queues = scheduler.scheduler(data.jobs, data.windowStart, data.windowEnd)
 
-queues.forEach((queue) =>
+queues.forEach((queue, index) =>
 {
-    console.log("Jobs in queue: ", queue.toString())
+    console.log("Queue ", (index + 1), ": ", queue.toString())
 })
 
