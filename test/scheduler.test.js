@@ -8,23 +8,28 @@ describe('scheduler.js scheduler tests', () =>
     {
         it('normal condition', () =>
         {
-            const result = scheduler.scheduler(data.jobs, data.window_start, data.window_end)
+            const result = scheduler.scheduler(data.jobs, data.windowStart, data.windowEnd)
             expect(result).to.eql([[1, 3], [2]]);
         })
         it('invalid window time condition', () =>
         {
-            const result = scheduler.scheduler(data.jobs, data.invalid_date, data.window_end)
+            const result = scheduler.scheduler(data.jobs, data.invalid_date, data.windowEnd)
             expect(result).to.eql([]);
         })
         it('jobs outside window frame', () =>
         {
-            const result = scheduler.scheduler(data.jobsOutside, data.window_start, data.window_end)
-            expect(result).to.eql([]);
+            const result = scheduler.scheduler(data.jobsOutside, data.windowStart, data.windowEnd)
+            expect(result).to.eql([[1]]);
         })
-        it('invalid jobs', () =>
+        it('invalid jobs, date', () =>
         {
-            const result = scheduler.scheduler(data.jobsInvalid, data.window_start, data.window_end)
-            expect(result).to.eql([]);
+            const result = scheduler.scheduler(data.jobsInvalidDate, data.windowStart, data.windowEnd)
+            expect(result).to.eql([[1]]);
+        })
+        it('invalid jobs, duration', () =>
+        {
+            const result = scheduler.scheduler(data.jobsInvalidDuration, data.windowStart, data.windowEnd)
+            expect(result).to.eql([[1]]);
         })
     })
 

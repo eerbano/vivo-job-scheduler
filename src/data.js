@@ -44,7 +44,7 @@ data.jobsOutside =
         },
     ]
 
-data.jobsInvalid =
+data.jobsInvalidDate =
     [
         {
             id: 1,
@@ -66,8 +66,30 @@ data.jobsInvalid =
         },
     ]
 
-data.window_start = "2019-11-10 09:00:00"
-data.window_end = "2019-11-11 12:00:00"
+data.jobsInvalidDuration =
+    [
+        {
+            id: 1,
+            descricao: "Importação de arquivos de fundos",
+            data_maxima_conclusao: "2019-11-10 12:00:00",
+            tempo_estimado: "2 horas",
+        },
+        {
+            id: 2,
+            descricao: "Importação de dados da Base Legada",
+            data_maxima_conclusao: "2019-11-12 12:00:00",
+            tempo_estimado: " horas",
+        },
+        {
+            id: 3,
+            descricao: "Importação de dados de integração",
+            data_maxima_conclusao: "2019-11-12 12:00:00",
+            tempo_estimado: " horas",
+        },
+    ]
+
+data.windowStart = "2019-11-10 09:00:00"
+data.windowEnd = "2019-11-11 12:00:00"
 
 data.invalid_date = "2019-11-11 :"
 
